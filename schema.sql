@@ -30,6 +30,7 @@ CREATE TABLE users (
     external_provider_id VARCHAR(255) UNIQUE,
     name VARCHAR(50),
     email VARCHAR(50),
+    role VARCHAR(50),
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 

@@ -17,19 +17,20 @@ const seedPool = new Pool({
 
 (async function () {
   const client = await seedPool.connect();
-  let query = "INSERT INTO users (external_provider_id, name, email) VALUES";
+  let query =
+    "INSERT INTO users (external_provider_id, name, email, role) VALUES";
 
   let testUserValues = [];
   for (let i = 0; i < testUsers.length; i++) {
     const { external_provider_id, name, email } = testUsers[i];
-    testUserValues.push(external_provider_id, name, email);
+    testUserValues.push(external_provider_id, name, email, "user");
   }
 
-  for (let i = 0; i < testUserValues.length; i += 3) {
-    if (i === testUserValues.length - 3) {
-      query += ` ($${i + 1}, $${i + 2}, $${i + 3}) `;
+  for (let i = 0; i < testUserValues.length; i += 4) {
+    if (i === testUserValues.length - 4) {
+      query += ` ($${i + 1}, $${i + 2}, $${i + 3}, $${i + 4}) `;
     } else {
-      query += ` ($${i + 1}, $${i + 2}, $${i + 3}),`;
+      query += ` ($${i + 1}, $${i + 2}, $${i + 3}, $${i + 4}),`;
     }
   }
   query += "RETURNING id, name;";
