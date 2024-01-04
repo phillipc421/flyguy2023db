@@ -31,6 +31,7 @@ CREATE TABLE users (
     name VARCHAR(50),
     email VARCHAR(50),
     role VARCHAR(50),
+    stripe_id TEXT,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
