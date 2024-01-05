@@ -6,6 +6,8 @@ CREATE DATABASE flyguy2023;
 
 CREATE EXTENSION "uuid-ossp";
 
+CREATE TYPE order_status AS ENUM ('new', 'paid', 'canceled', 'fulfilled');
+
 CREATE TABLE reviews (
     id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
     product_id UUID,
@@ -40,7 +42,8 @@ CREATE TABLE orders (
     order_date TIMESTAMPTZ DEFAULT NOW(),
     customer_name VARCHAR(255) NOT NULL,
     user_id UUID,
-    order_total MONEY
+    order_total MONEY,
+    status order_status
 );
 
 CREATE TABLE order_items (

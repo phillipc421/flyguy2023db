@@ -53,13 +53,14 @@ const seedPool = new Pool({
   );
 
   // query for adding test orders
-  query = "INSERT INTO orders (customer_name, user_id, order_total) VALUES";
+  query =
+    "INSERT INTO orders (customer_name, user_id, order_total, status) VALUES";
 
-  for (let i = 0; i < testOrdersValues.length; i += 3) {
-    if (i === testOrdersValues.length - 3) {
-      query += ` ($${i + 1}, $${i + 2}, $${i + 3}) `;
+  for (let i = 0; i < testOrdersValues.length; i += 4) {
+    if (i === testOrdersValues.length - 4) {
+      query += ` ($${i + 1}, $${i + 2}, $${i + 3}, $${i + 4}) `;
     } else {
-      query += ` ($${i + 1}, $${i + 2}, $${i + 3}),`;
+      query += ` ($${i + 1}, $${i + 2}, $${i + 3}, $${i + 4}),`;
     }
   }
   query += "RETURNING id;";
@@ -85,9 +86,6 @@ const seedPool = new Pool({
     }
   }
 
-  const { rows: orderItemsRows } = await client.query(
-    query,
-    testOrderItemValues
-  );
+  await client.query(query, testOrderItemValues);
   client.release();
 })();

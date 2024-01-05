@@ -23,6 +23,9 @@ function makeOrderTotal(qty, prices) {
   return [total, indexesPicked];
 }
 
+// map to order_status enum in schema.sql
+const ORDER_STATUS = ["new", "paid", "canceled", "fulfilled"];
+
 // returns the occurences of each price
 function createPriceSplit(priceIndexes, prices) {
   return priceIndexes.reduce((prev, curr) => {
@@ -48,11 +51,12 @@ function createTestOrderValues(numOrders, testUsers, prices) {
     const randomUser = testUsers[randomIndex(testUsers.length)];
     const [id, name] = randomUser;
     const orderQty = randomNumber(5);
+    const status = ORDER_STATUS[randomIndex(ORDER_STATUS.length)];
     // const orderQty = 5;
     const [orderTotal, priceIndexes] = makeOrderTotal(orderQty, prices);
     const priceSplits = createPriceSplit(priceIndexes, prices);
     priceSplitsList.push(priceSplits);
-    testOrderValues.push(name, id, orderTotal);
+    testOrderValues.push(name, id, orderTotal, status);
   }
   return [testOrderValues, priceSplitsList];
 }
